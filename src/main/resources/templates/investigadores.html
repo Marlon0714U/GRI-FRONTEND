@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/header :: header('Investigadores')">
+	<meta charset="utf-8" />
+</head>
+
+<body id="page-top" class="sidebar-toggled">
+
+	<nav th:replace="fragments/nav :: nav('card-0-nav')"></nav>
+	<nav th:replace="fragments/secondarynav"></nav>
+	<div id="wrapper">
+		<div id="content-wrapper">
+			<div class="region-hero">
+				<div class="contenedor-hero">
+					<div class="contenido-hero">
+
+						<div class="row">
+							<div class="col">
+								<div class="contenedor-header">
+									<i class="fas fa-chart-pie"></i> Investigadores por género
+								</div>
+								<div id="pie-generos" class="contenedor-body" style="width: 200; height: 150">
+								</div>
+							</div>
+						</div>
+						<h1 class="titulo-hero">Investigadores</h1>
+						Tabla/Reporte de los Investigadores activos en el sistema.
+					</div>
+				</div>
+			</div>
+			<br>
+			<div>
+				<ul class="nav nav-tabs" id="myTab" role="tablist">
+					<li class="nav-item">
+						<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+							aria-controls="home" aria-selected="true">CvLac</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+							aria-controls="profile" aria-selected="false">Orcid</a>
+					</li>
+				</ul>
+				<div class="tab-content" id="myTabContent">
+					<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+						<div class="container-fluid">
+							<div class="separador-1"></div>
+							<div id="table">
+								<table id="tabla_investigadores"
+									class="table table-striped table-bordered table-hover table-responsive-lg"
+									style="width: 100%">
+									<thead>
+										<tr>
+											<th></th>
+											<th>NOMBRES Y APELLIDOS</th>
+											<th>CATEGORÍA COLCIENCIAS</th>
+											<th>NIVEL ACADÉMICO</th>
+											<th>PERTENENCIA</th>
+											<th>SEXO</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="inv : ${listaInvestigadores}">
+											<td th:text="${inv.id}"></td>
+											<td th:text="${inv.nombre}"></td>
+											<td th:text="${inv.categoria}"></td>
+											<td th:text="${inv.nivelAcademico}"></td>
+											<td th:text="${inv.pertenencia}"></td>
+											<td th:text="${inv.sexo}"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+						<div class="container-fluid">
+							<div class="separador-1"></div>
+							<div id="table">
+								<table id="tabla_orcid"
+									class="table table-striped table-bordered table-hover table-responsive-lg"
+									style="width: 100%">
+									<thead>
+										<tr>
+											<th>ID</th>
+											<th>ORCID</th>
+											<th>NOMBRES Y APELLIDOS</th>
+											<th>EMPLEOS</th>
+											<th>EDUCACION</th>
+											<th>ACTIVIDADES</th>
+											<th>TRABAJOS</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="inv : ${investigadoresOrcid}">
+											<td th:text="${inv.id}"></td>
+											<td th:text="${inv.orcidIdentifier.path}"></td>
+											<td>
+												<p th:text="${inv.person.name.givenNames != null ? inv.person.name.givenNames.value:'' }"></p>
+												<p th:text="${inv.person.name.familyName != null ? inv.person.name.familyName.value:'' }"></p>
+											</td>
+											<td><span th:if="${inv.activitiesSummary.employments.lastModifiedDate != null}">
+													<span th:each="affiliation : ${inv.activitiesSummary.employments.affiliationGroup}">
+														<span th:text="'-'+${affiliation.summaries[0].employmentSummary.organization.name}"></span><br>
+													</span>
+												</span>
+											</td>
+											<td><span th:if="${inv.activitiesSummary.educations.lastModifiedDate != null}">
+													<span th:each="affiliation : ${inv.activitiesSummary.educations.affiliationGroup}">
+														<span th:text="'-'+${affiliation.summaries[0].educationSummary.organization.name + 
+															' (' + affiliation.summaries[0].educationSummary.roleTitle + ')'}"></span><br>
+													</span>
+												</span>
+											</td>
+											<td><span th:if="${inv.activitiesSummary.memberships.lastModifiedDate != null}">
+													<span th:each="affiliation : ${inv.activitiesSummary.memberships.affiliationGroup}">
+														<span th:text="'-'+${affiliation.summaries[0].membershipSummary.organization.name}"></span><br>
+													</span>
+												</span>
+											</td>
+											<td> <span th:if="${inv.activitiesSummary.works.lastModifiedDate != null}"><span th:each="gru : ${inv.activitiesSummary.works.group}">
+														<span th:text="'-'+${gru.workSummary[0].title.title.value}"></span><br>
+													</span>
+												</span>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div th:replace="fragments/footer"></div>
+
+	<script th:inline="javascript">
+		var investigadoresOrcid = [[${investigadoresOrcid}]];
+		$(function () {
+
+			var categorias = [[${dataGeneroInvestigadores}]];
+			var clavesCategoria = [[${clavesGeneroInvestigadores}]];
+			var listaInvestigadores = [[${listaInvestigadores}]];
+			var listaCategorias = [];
+
+			console.log(listaInvestigadores);
+
+			categorias.forEach(function (item, index) {
+				listaCategorias.push({
+					name: clavesCategoria[index],
+					y: item
+				});
+			});
+
+			Highcharts.chart('pie-generos', {
+				chart: {
+					plotBackgroundColor: null,
+					plotBorderWidth: null,
+					plotShadow: false,
+					type: 'pie'
+				},
+				title: {
+					text: 'Género de investigadores'
+				},
+				tooltip: {
+					pointFormat: '{series.name}: <b>{point.y:.0f}</b>'
+				},
+				plotOptions: {
+					pie: {
+						allowPointSelect: true,
+						cursor: 'pointer',
+						dataLabels: {
+							enabled: true,
+							format: '<b>{point.name}</b>: cant: {point.y:.0f} - ({point.percentage:.1f} %)'
+						}
+					}
+				},
+				series: [{
+					name: "Investigadores",
+					colorByPoint: true,
+					data: listaCategorias
+				}]
+			});
+
+		});
+	</script>
+</body>
+
+</html>

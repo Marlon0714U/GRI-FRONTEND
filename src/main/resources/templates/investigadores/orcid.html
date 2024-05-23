@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/header :: header('Orcid')">
+	<meta charset="utf-8" />
+</head>
+
+<body id="page-top" class="sidebar-toggled">
+	<nav th:replace="fragments/nav :: nav(card-0)"></nav>
+	<nav th:replace="fragments/secondarynav"></nav>
+	<div id="wrapper">
+		<div id="content-wrapper">
+			<div class="container-fluid">
+				<div class="region-hero">
+					<div class="contenedor-hero">
+						<div class="contenido-hero">
+							<h1 id="titulo" class="titulo-hero" th:text="${nombre}"></h1>
+							Información Orcid
+						</div>
+					</div>
+				</div>
+				<div class="region-hero" th:if="${person.biography != null}">
+					<div class="contenedor-hero">
+						<div class="contenido-hero">
+							<div>
+								Bibliografia
+								<br>
+								<span th:text="${person.biography.content}"></span>
+								<br>
+								< </div>
+							</div>
+						</div>
+					</div>
+					<div id="accordion">
+						<div class="card">
+							<div class="card-header">
+								<a class="collapsed card-link" data-toggle="collapse" href="#collapseOne">
+									<h4 th:text="'Empleos (' + ${empleos.size()} + ')'"></h4>
+								</a>
+							</div>
+							<div id="collapseOne" class="collapse">
+								<div class="card-body">
+									<div id="table">
+										<table id="tabla_empleos"
+											class="table-0 table-bordered dataTable no-footer dtr-inline"
+											style="width: 100%">
+											<thead>
+												<tr>
+													<th>INSTITUCION</th>
+													<th>ROL</th>
+													<th>FUENTE</th>
+													<th>ORGANIZACION</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="empleo : ${empleos}">
+													<td th:text="${empleo.summaries[0].employmentSummary.organization.name} + ': ' +
+												${empleo.summaries[0].employmentSummary.organization.address.city} + ', ' +
+												${empleo.summaries[0].employmentSummary.organization.address.region} + ', ' +
+												${empleo.summaries[0].employmentSummary.organization.address.country}">
+													</td>
+													<td th:text="${empleo.summaries[0].employmentSummary.roleTitle +
+												 (empleo.summaries[0].employmentSummary.departmentName != null ? 
+												 ' ('+empleo.summaries[0].employmentSummary.departmentName +')' : '')}">
+													</td>
+													<td
+														th:text="${empleo.summaries[0].employmentSummary.source.sourceName.value}">
+													</td>
+													<td>
+														<ul>
+															<li>
+																<div>
+																	<p th:text="${(empleo.summaries[0].employmentSummary.organization.disambiguatedOrganization != null ? 
+																'Organization identifiers' : '' )}">
+																	</p>
+																	<p
+																		th:text="${(empleo.summaries[0].employmentSummary.organization.disambiguatedOrganization != null ?
+																empleo.summaries[0].employmentSummary.organization.disambiguatedOrganization.disambiguationSource + ': ' + 
+																empleo.summaries[0].employmentSummary.organization.disambiguatedOrganization.disambiguatedOrganizationIdentifier: '' )}">
+																	</p>
+																	<p th:text="${(empleo.summaries[0].employmentSummary.organization.disambiguatedOrganization != null ?
+																empleo.summaries[0].employmentSummary.organization.name : '' )}">
+																	</p>
+																</div>
+																<div>
+																	<p
+																		th:text="${(empleo.summaries[0].employmentSummary.url != null ? 'URL:' : '' )}">
+																	</p>
+																	<p th:text="${(empleo.summaries[0].employmentSummary.url != null ?
+																empleo.summaries[0].employmentSummary.url.value : '')}">
+																	</p>
+																</div>
+															</li>
+														</ul>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="card">
+							<div class="card-header">
+								<a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+									<h4 th:text="'Educacion y calificaciones (' + ${educacion.size()} + ')'"></h4>
+								</a>
+							</div>
+							<div id="collapseTwo" class="collapse">
+								<div class="card-body">
+									<div id="table">
+										<table id="tabla_empleos"
+											class="table-0 table-bordered dataTable no-footer dtr-inline"
+											style="width: 100%">
+											<thead>
+												<tr>
+													<th>UNIVERSIDAD</th>
+													<th>ROL</th>
+													<th>FUENTE</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="edu : ${educacion}">
+													<td th:text="${edu.summaries[0].educationSummary.organization.name}+ ': ' +
+												${edu.summaries[0].educationSummary.organization.address.city} + ', ' +
+												${edu.summaries[0].educationSummary.organization.address.region} + ', ' +
+												${edu.summaries[0].educationSummary.organization.address.country}">
+													</td>
+													<td th:text="${edu.summaries[0].educationSummary.roleTitle +
+												 (edu.summaries[0].educationSummary.departmentName != null ? 
+												 ' ('+edu.summaries[0].educationSummary.departmentName +')' : '')}">
+													</td>
+													<td
+														th:text="${edu.summaries[0].educationSummary.source.sourceName.value}">
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="card">
+							<div class="card-header">
+								<a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
+									<h4 th:text="'Actividades profesionales (' + ${actividades.size()} + ')'"></h4>
+								</a>
+							</div>
+							<div id="collapseThree" class="collapse">
+								<div class="card-body">
+									<div id="table">
+										<table id="tabla_empleos"
+											class="table-0 table-bordered dataTable no-footer dtr-inline"
+											style="width: 100%">
+											<thead>
+												<tr>
+													<th>TRABAJO</th>
+													<th>ROL</th>
+													<th>FUENTE</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="acti : ${actividades}">
+													<td th:text="${acti.summaries[0].membershipSummary.organization.name + ': ' +
+												acti.summaries[0].membershipSummary.organization.address.city + ', ' + 
+												acti.summaries[0].membershipSummary.organization.address.region + ', ' +
+												acti.summaries[0].membershipSummary.organization.address.country}">
+													</td>
+													<td th:text="${acti.summaries[0].membershipSummary != null ?
+												'Miembro' : ''}">
+													</td>
+													<td
+														th:text="${acti.summaries[0].membershipSummary.source.sourceName.value}">
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+
+								</div>
+							</div>
+						</div>
+
+
+
+						<div class="card">
+							<div class="card-header">
+								<a class="collapsed card-link" data-toggle="collapse" href="#collapseFour">
+									<h4 th:text="'Trabajos (' + ${trabajos.size()} + ')'"></h4>
+								</a>
+							</div>
+							<div id="collapseFour" class="collapse">
+								<div class="card-body">
+									<div id="table">
+										<table id="tabla_empleos"
+											class="table-0 table-bordered dataTable no-footer dtr-inline"
+											style="width: 100%">
+											<thead>
+												<tr>
+													<th>TRABAJO</th>
+													<th>ROL</th>
+													<th>FUENTE</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="tra : ${trabajos}">
+													<td th:text="${tra.workSummary[0].title.title.value}">
+													</td>
+													<td>
+														<p th:text="${tra.workSummary[0].journalTitle != null ? 
+														tra.workSummary[0].journalTitle.value :
+														'No registra'}">
+														</p>
+														<ul
+															th:each="externalId : ${tra.workSummary[0].externalIds.externalId}">
+															<li>
+																<p th:text="${externalId.externalIdType} + ': '">
+																</p>
+																<p>
+																	<a th:text="${externalId.externalIdUrl != null ? 
+																externalId.externalIdUrl.value :
+																'No registra' }" th:href="${externalId.externalIdUrl != null ? 
+																	externalId.externalIdUrl.value :
+																	'' }" target="_blank">
+																	</a>
+																</p>
+
+															</li>
+														</ul>
+													</td>
+													<td th:text="${tra.workSummary[0].source.sourceName.value}">
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<div th:replace="fragments/footer"></div>
+</body>
+
+<script th:inline="javascript">
+	var data = [[${OrcidData}]];
+	var empleos = [[${empleos}]];
+	var educacion = [[${educacion}]];
+	var trabajos = [[${trabajos}]];
+	var actividades = [[${actividades}]];
+	var person = [[${person}]];
+
+	//	Documento listo
+	$(document).ready(function () {
+
+	});
+
+</script>
+
+</html>

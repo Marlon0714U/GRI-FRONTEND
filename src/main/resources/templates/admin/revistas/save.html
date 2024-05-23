@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/header :: header('Modal_Investigadores')">
+	<meta charset="utf-8" />
+
+</head>
+
+<div id="agregarInvestigadoresModal" class="modalContainer">
+	<div class="modal-contentCruds">
+		<span class="closeModalInvestigador"></span>
+		<h2 id="idTitleCrearInvestigador"></h2>
+		<form th:action="@{/revistas/save}" th:object="${revista}" method="post" enctype="multipart/form-data"
+			id="form">
+			<div class="form-group">
+				<input style="display:none" type="text" readonly class="form-control inputRevistas" name="id" id="id"
+					placeholder="Ingrese el ID del Investigador">
+			</div>
+			<div class="form-group">
+				<label>ISSN: </label> <input type="text" class="form-control inputRevistas " name="identificador"
+					id="identificador" placeholder="Ingrese el ISSN">
+			</div>
+			<div class="form-group">
+				<label>Institucion: </label> <input type="text" class="form-control inputRevistas " name="institucion"
+					id="institucion" placeholder="Ingrese la institucion">
+			</div>
+			<div class="form-group">
+				<label>Nombre: </label> <input type="text" class="form-control inputRevistas " name="nombre" id="nombre"
+					placeholder="Ingrese el nombre">
+			</div>
+			<div class="form-group">
+				<label>Participacion: </label> <input type="text" class="form-control inputRevistas "
+					name="participacion" id="participacion" placeholder="Ingrese la participacion">
+			</div>
+			<div class="form-group">
+				<label>Tipo: </label> <input type="text" class="form-control inputRevistas " name="tipo" id="tipo"
+					placeholder="Ingrese el tipo">
+			</div>
+			<div class="form-group">
+				<label> Categoria: </label> <input type="text" class="form-control inputRevistas " name="categoria"
+					id="categoria" placeholder="Ingrese la categoria">
+			</div>
+		</form>
+		<div align="right" class="mt-5">
+			<a href="#" class="closeModalInvestigador">Cancelar</a>
+			<button class="btn btn-primary" onclick="enviar()">
+				<i class="fas fa-save"></i> Guardar
+			</button>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+
+
+	function enviar() {
+		
+		identificador = document.getElementById("identificador");
+		id = document.getElementById("id");
+
+
+		if (id.value != '-1' ) {
+			document.getElementById('form').submit();
+			Swal.fire(
+				'¡Correcto!',
+				'Revista actualizada!',
+				'success'
+			);
+		} else if (id.value == '-1' && data.find((e) => e.identificador == identificador.value) ==null) {
+			document.getElementById('form').submit();
+			Swal.fire(
+				'¡Correcto!',
+				'Revista creada!',
+				'success'
+			);
+
+		}
+		else {
+			Swal.fire(
+				'¡Error!',
+				'La revista ya existe!',
+				'error'
+			);
+		}
+
+	}
+
+</script>

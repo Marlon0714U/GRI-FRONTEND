@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/header :: header('Actividades de Formación')">
+	<meta charset="utf-8" />
+</head>
+
+<body id="page-top" class="sidebar-toggled">
+
+	<nav th:replace="fragments/nav :: nav(${color}+'-nav')"></nav>
+	<nav th:replace="fragments/secondarynav"></nav>
+	<div id="wrapper">
+		<div id="content-wrapper">
+			<div class="container-fluid">
+
+				<div class="region-hero">
+					<div class="contenedor-hero">
+						<div class="contenido-hero">
+							<h1 id="titulo" class="titulo-hero" th:text="${nombre}"></h1>
+							Consolidado
+						</div>
+					</div>
+				</div>
+				<div class="cuerpo">
+					<form>
+						<div class="container">
+
+							<div class="row reducir-texto">
+								<div class="col">
+									<div class="row">
+										<div class="col">
+											<label for="exampleFormControlSelect1">Desde</label>
+											<select id="startYear" class="form-control">
+												<option th:each="i : ${#numbers.sequence(2000, 2030)}" th:value="${i}"
+													th:text="${i}"></option>
+											</select>
+											<br>
+										</div>
+										<div class="col">
+											<label for="exampleFormControlSelect1">Hasta</label>
+											<select  id="endYear" class="form-control">
+												<option th:each="i : ${#numbers.sequence(2030, 2000)}" th:value="${i}"
+													th:text="${i}"></option>
+											</select>
+											<br>
+										</div>
+									</div>
+									<div class="row">
+										<input id="checkboxAll" type="checkbox" text="-1" value="-1"
+											onclick="marcar(); enviar()">Todos
+										<br>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="container">
+							<div class="row reducir-texto">
+								<div class="col">
+									Actividades de Formación:
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="0">Cursos de Corta
+									Duración
+									Dictados
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="1">Trabajos
+									Dirigidos/Tutorías
+									<br>
+								</div>
+								<div class="col">
+									Actividades como Evaluador:
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox"
+										value="2">Jurado/Comisiones
+									Evaluadoras de Trabajo de Grado
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="3">Participación en
+									Comités de
+									Evaluación
+									<br>
+								</div>
+								<div class="col">
+									Actividades de Apropiación Social:
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="5">Actividades de
+									Edición
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="6">Participaciones
+									en Eventos
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="30">Informes de
+									Investigación
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="7">Redes de
+									Conocimiento
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="8">Generación de
+									Contenido
+									Impreso
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="9">Generación de
+									Contenido
+									Multimedia
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="10">Generación de
+									Contenido
+									Virtual
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="11">Estrategias de
+									Comunicación
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="12">Estrategias
+									Pedagógicas
+									para el Fomento del CTI
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="13">Espacios de
+									Participación
+									Ciudadana
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="14">Participación
+									Ciudadana en
+									Proyectos de CTI
+									<br>
+								</div>
+								<div class="col">
+									Producciones Bibliográficas:
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="15">Artículos
+									Cientificos
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="17">Libros
+									Publicados
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="19">Capítulos de
+									Libro
+									Publicados
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="22">Documentos de
+									Trabajo
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="39">Otra
+									Publicación
+									Divulgativa
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="16">Otros Artículos
+									Publicados
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="18">Otros Libros
+									Publicados
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="40">Traducciones
+									Realizadas
+									<br>
+								</div>
+								<div class="col">
+									Producciones Técnicas y Tecnológicas:
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="53">Cartas, Mapas o
+									Similares
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="52">Consultorías e
+									Informes
+									Técnicos
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="51">Diseños
+									Industriales
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="27">Innovaciones en
+									Procesos
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="49">Innovaciones en
+									la Gestión
+									Empresarial
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="48">Otros Productos
+									Tecnológicos
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="25">Prototipos y
+									Patentes
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="29">Regulaciones y
+									Normas
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="46">Reglamentos
+									Técnicos
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="45">Guías de
+									Práctica Clínica
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="44">Proyectos de
+									Ley
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="24">Softwares
+									Producidos
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="31">Empresas de
+									Base
+									Tecnológica
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="47">Plantas Piloto
+									<br>
+								</div>
+								<div class="col">
+									Producción en Arte
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="34">Obras o
+									Productos
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="36">Industrias
+									Creativas y
+									Culturales
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="37">Eventos
+									Artísticos
+									<br>
+									<input name="checkbox" onclick="enviar()" type="checkbox" value="38">Talleres
+									Creativos
+									<br>
+								</div>
+							</div>
+						</div>
+					</form>
+					<ul class="cards-list">
+						<li class="ci-2 cards-item">
+							<div class="card">
+								<a id="link" href="#" rel="keep-params">
+									<div class="card-icon card-icon-1">
+										<span class="icono fa fa-chalkboard-teacher"></span>
+									</div>
+									<div class="card-title-container">
+										<h3 class="card-title">
+											Generar consolidado
+										</h3>
+									</div>
+								</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<div th:replace="fragments/footer"></div>
+</body>
+<style>
+	.reducir-texto {
+		font-size: 12px;
+		/* Tamaño de texto deseado, ajusta el valor según tus necesidades */
+	}
+</style>
+<script th:inline="javascript">
+
+	var id = [[${id}]];
+	var type = [[${tipo}]];
+	var prod = "";
+
+	function enviar() {
+		var consulta = "";
+		var opciones = document.getElementsByName("checkbox");
+		var anio = document.getElementById("startYear").value+'-'+document.getElementById("endYear").value
+	
+		for (var i = 0; i < opciones.length; i++) {
+			if (opciones[i].checked) {
+				consulta += opciones[i].value + "-"
+			}
+		}
+		consulta = consulta.substring(0, consulta.length - 1);
+		if (consulta.length != 0) {
+			var enlace = document.getElementById("link");
+			var url = `reporteConsolidado?id=${id}&type=${type}&prod=${consulta}&anio=${anio}`;
+			enlace.href = url;
+		}
+
+	}
+
+	function marcar() {
+		var opciones = document.getElementsByName("checkbox");
+		var checkboxTodos = document.getElementById("checkboxAll");
+		for (var checkbox of opciones) {
+			checkbox.checked = checkboxTodos.checked;
+		}
+	}
+</script>
+
+</html>
