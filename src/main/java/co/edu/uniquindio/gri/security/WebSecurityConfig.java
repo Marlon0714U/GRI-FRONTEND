@@ -1,19 +1,19 @@
 package co.edu.uniquindio.gri.security;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.*;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+
 
 /**
  * Clase WebSecurityConfig.
@@ -35,32 +35,13 @@ public class WebSecurityConfig {
      * @return BCryptPasswordEncoder instance.
      */
     @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    /**
-     * Creates an in-memory user details service with predefined users.
-     *
-     * @param passwordEncoder The password encoder.
-     * @return UserDetailsService instance.
-     */
     @Bean
-    public UserDetailsService userDetailsService(BCryptPasswordEncoder passwordEncoder) {
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(User.withUsername("user")
-                .password(passwordEncoder.encode("password"))
-                .roles("USER")
-                .build());
-        manager.createUser(User.withUsername("admin")
-                .password(passwordEncoder.encode("password"))
-                .roles("ADMIN")
-                .build());
-        manager.createUser(User.withUsername("inge")
-                .password(passwordEncoder.encode("password"))
-                .roles("INGE")
-                .build());
-        return manager;
+    public UserDetailsService userDetailsService() {
+        return userDetailsService;
     }
 
    /**
@@ -71,28 +52,35 @@ public class WebSecurityConfig {
      * @throws Exception If an error occurs during configuration.
      */
     @Bean
-        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-            http.csrf(AbstractHttpConfigurer::disable)
-                    .authorizeHttpRequests(authManagerRequestMatcherRegistry -> authManagerRequestMatcherRegistry
-                            .requestMatchers("/css/**", "/js/**", "/img/**", "/webjars/**", "/lib/**", "/favicon.ico").permitAll()
-                            .requestMatchers("/inventario", "/reporteinventario", "/pertenencia", "/reportepertenencia").hasRole("ADMIN")
-                            .requestMatchers("/general?id=6&type=f").hasRole("USER")
-                            .anyRequest().authenticated())
-                    .formLogin(form -> form
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(authManagerRequestMatcherRegistry -> authManagerRequestMatcherRegistry
+                        .requestMatchers("/css/**", "/js/**", "/img/**", "/webjars/**", "/lib/**", "/favicon.ico").permitAll()
+                        .requestMatchers("/inventario", "/reporteinventario", "/pertenencia", "/reportepertenencia").hasRole("ADMIN")
+                        .requestMatchers("/general?id=6&type=f").hasRole("USER")
+                        .anyRequest().authenticated())
+                .formLogin(form -> form
                         .loginPage("/login")
-                        .permitAll()
                         .defaultSuccessUrl("/")
+                        .permitAll()
                         .failureUrl("/login?error")
                         .usernameParameter("username")
-                        .passwordParameter("password")
-                    )
-                    .logout(logout -> logout
+                        .passwordParameter("password"))
+                .logout(logout -> logout
                         .permitAll()
-                        .logoutSuccessUrl("/login?logout")
-                    );
+                        .logoutSuccessUrl("/login?logout"));
 
-            return http.build();
-        }
+        return http.build();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService);
+        authenticationProvider.setPasswordEncoder(passwordEncoder);
+
+        return new ProviderManager(authenticationProvider);
+    }
 
          /*
     	 * (non-Javadoc)
@@ -105,3 +93,4 @@ public class WebSecurityConfig {
     	 * web a clientes autenticados.
     	 */
 }
+
