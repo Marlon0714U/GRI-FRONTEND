@@ -13,9 +13,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.apache.http.HttpStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -179,8 +181,8 @@ public class WebController {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		if (principal instanceof UserDetails) {
-
 			return main(model);
+
 		}
 
 		return "login";
@@ -2328,7 +2330,7 @@ public class WebController {
 	public String getEstadisticasFacultad(String id, Model model) {
 		// ------Llamado a las consultas en la base de datos para las
 		// ------facultades-----------------------------------------------------------------------
-		List<BigInteger> resumen = facultadDAO.getResumenGeneral(new Long(id));
+		List<BigInteger> resumen = facultadDAO.getResumenGeneral(Long.parseLong(id));
 
 		// ------Llamado a las consultas en la base de datos para
 		// producciones-----------------------------------------------------------------------
@@ -2458,7 +2460,7 @@ public class WebController {
 	public String getEstadisticasProgramas(String id, Model model) {
 		// ------Llamado a las consultas en la base de datos para las
 		// ------facultades-----------------------------------------------------------------------
-		List<BigInteger> resumen = programaDAO.getResumenGeneralPrograma(new Long(id));
+		List<BigInteger> resumen = programaDAO.getResumenGeneralPrograma(Long.parseLong(id));
 
 		// ------Llamado a las consultas en la base de datos para
 		// producciones-----------------------------------------------------------------------
@@ -2574,7 +2576,7 @@ public class WebController {
 	public String getEstadisticasCentros(String id, Model model) {
 		// ------Llamado a las consultas en la base de datos para las
 		// ------facultades-----------------------------------------------------------------------
-		List<BigInteger> resumen = centroDAO.getResumenGeneralCentros(new Long(id));
+		List<BigInteger> resumen = centroDAO.getResumenGeneralCentros(Long.parseLong(id));
 
 		// ------Llamado a las consultas en la base de datos para
 		// producciones-----------------------------------------------------------------------
@@ -2688,7 +2690,7 @@ public class WebController {
 	public String getEstadisticasGrupo(String id, Model model) {
 		// ------Llamado a las consultas en la base de datos para las
 		// ------facultades-----------------------------------------------------------------------
-		List<BigInteger> resumen = grupoDAO.getResumenGeneralGrupo(new Long(id));
+		List<BigInteger> resumen = grupoDAO.getResumenGeneralGrupo(Long.parseLong(id));
 
 		// ------Llamado a las consultas en la base de datos para
 		// producciones-----------------------------------------------------------------------
@@ -2822,13 +2824,13 @@ public class WebController {
 
 		// ------Llamado a las consultas en la base de datos para las
 		// ------facultades-----------------------------------------------------------------------
-		List<BigInteger> resumenCienciasBasicas = facultadDAO.getResumenGeneral(new Long("1"));
-		List<BigInteger> resumenEducacion = facultadDAO.getResumenGeneral(new Long("2"));
-		List<BigInteger> resumenCienciasDeLaSalud = facultadDAO.getResumenGeneral(new Long("3"));
-		List<BigInteger> resumenIngenieria = facultadDAO.getResumenGeneral(new Long("4"));
-		List<BigInteger> resumenCienciasHumanas = facultadDAO.getResumenGeneral(new Long("5"));
-		List<BigInteger> resumenAgroindustria = facultadDAO.getResumenGeneral(new Long("6"));
-		List<BigInteger> resumenCienciasEconomicas = facultadDAO.getResumenGeneral(new Long("7"));
+		List<BigInteger> resumenCienciasBasicas = facultadDAO.getResumenGeneral(Long.parseLong("1"));
+		List<BigInteger> resumenEducacion = facultadDAO.getResumenGeneral(Long.parseLong("2"));
+		List<BigInteger> resumenCienciasDeLaSalud = facultadDAO.getResumenGeneral(Long.parseLong("3"));
+		List<BigInteger> resumenIngenieria = facultadDAO.getResumenGeneral(Long.parseLong("4"));
+		List<BigInteger> resumenCienciasHumanas = facultadDAO.getResumenGeneral(Long.parseLong("5"));
+		List<BigInteger> resumenAgroindustria = facultadDAO.getResumenGeneral(Long.parseLong("6"));
+		List<BigInteger> resumenCienciasEconomicas = facultadDAO.getResumenGeneral(Long.parseLong("7"));
 
 		// Este nÃºmero es usado para indicar la cantidad de investigadores total debido
 		// a que con una suma aritmetica normal repetirÃ­a los investigadores

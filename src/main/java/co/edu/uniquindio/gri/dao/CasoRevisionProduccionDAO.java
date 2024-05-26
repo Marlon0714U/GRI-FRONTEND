@@ -23,9 +23,9 @@ public class CasoRevisionProduccionDAO {
 	@Autowired
 	GestorDeCasosBonita gestorDeCasosBonita;
 
-	@Autowired
+	/*@Autowired
 	CasoRevisionProduccionDAO casoRevisionProduccionDAO;
-
+*/
 	private static final Logger log = LoggerFactory.getLogger(CasoRevisionProduccionDAO.class);
 
 	/**
@@ -84,14 +84,16 @@ public class CasoRevisionProduccionDAO {
 	 * @param tipoProduccion tipo de la produccion
 	 */
 	public boolean archivarCaso(long id, Long idProduccion, String tipoProduccion) {
+
 		try {
-			if (casoRevisionProduccionRepository.getCasoPorProduccion(idProduccion, tipoProduccion) != null) {
+			CasoRevisionProduccion casoExistente = casoRevisionProduccionRepository.getCasoPorProduccion(idProduccion,
+					tipoProduccion);
+			if (casoExistente != null) {
 				log.warn("Ya existe un caso para la producción " + idProduccion + " de tipo " + tipoProduccion
 						+ " se eliminará y se creará uno nuevo");
 				//Reescritura del caso a nivel de BD y a nivel bonita en caso de que ya exista
-				CasoRevisionProduccion c = casoRevisionProduccionDAO.getCasoPorProduccion(idProduccion, tipoProduccion);
-				gestorDeCasosBonita.eliminarCasoDeSubidaYRevisionDeProduccionesDeInvestigacion(c.getId());
-				casoRevisionProduccionDAO.eliminarCaso(c.getId());
+				gestorDeCasosBonita.eliminarCasoDeSubidaYRevisionDeProduccionesDeInvestigacion(casoExistente.getId());
+				eliminarCaso(casoExistente.getId());
 			}
 			//Registro de nuevo caso
 			casoRevisionProduccionRepository
@@ -132,9 +134,6 @@ public class CasoRevisionProduccionDAO {
 	 * Método del repositorio que retorna los casos de recolecciones de las
 	 * producciones de una entidad
 	 * 
-	 * @param type     el tipo de la entidad (f: Facultad, p: Programa, c: Centro,
-	 *                 g: Grupo de Investigación i: Investigador)
-	 * @param entityId el id de la entidad
 	 * @return lista de producciones
 	 */
 	public List<CasoRevisionProduccion> getRecolecciones() {

@@ -3,6 +3,8 @@ package co.edu.uniquindio.gri.security;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -32,8 +34,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
      public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
      //Buscar el usuario con el repositorio y si no existe lanzar una exepcion
-    	 co.edu.uniquindio.gri.model.User appUser = 
-    			 userDAO.findOne(username);
+    	 co.edu.uniquindio.gri.model.User appUser = userDAO.findOne(username);
     
     if(appUser == null){
     	throw new  UsernameNotFoundException("No existe usuario");
