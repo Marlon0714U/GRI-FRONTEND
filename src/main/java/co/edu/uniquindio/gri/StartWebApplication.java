@@ -11,8 +11,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 /**
  * Clase StartWebApplication
  */
-@SpringBootApplication
 @EnableJpaAuditing
+@SpringBootApplication
 public class StartWebApplication {
 	
 	/**
