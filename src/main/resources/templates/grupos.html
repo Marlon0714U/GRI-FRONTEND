@@ -58,7 +58,7 @@
 									<div th:text="${#strings.substringBefore(cod,'Lí')}"></div>
 								</td>
 								<td th:text="${grupo.nombre}"></td>
-								<td th:if="${grupo.programas.get(0).facultad.nombre}"></td>
+								<td th:text="${grupo.programas.get(0).facultad.nombre}"></td>
 								<td th:text="${grupo.programas.get(0).nombre}"></td>
 								<td th:text="${grupo.centro.nombre}"></td>
 								<td th:text="${grupo.lider}"></td>

@@ -1,25 +1,31 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>gri</groupId>
+	<groupId>co.edu.uniquindio</groupId>
 	<artifactId>gri</artifactId>
+	<version>0.0.1</version>
 	<packaging>war</packaging>
-	<version>0.0.1-SNAPSHOT</version>
 	<name>gri</name>
+	<description>GRI (Gestion de resultados de investigacion)</description>
 	<url>http://maven.apache.org</url>
 	<parent>
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent -->
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.2.5</version>
+		<version>3.3.0</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<properties>
-		<!-- 		<hibernate.version>4.2.21.Final</hibernate.version> -->
-		<bootstrap.version>4.2.1</bootstrap.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/junit/junit -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -27,7 +33,6 @@
 			<version>4.13.2</version>
 			<scope>test</scope>
 		</dependency>
-
 
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
 		<dependency>
@@ -49,9 +54,8 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>33.1.0-jre</version>
+			<version>33.2.1-jre</version>
 		</dependency>
-
 
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
 		<dependency>
@@ -60,21 +64,6 @@
 			<version>2.17.1</version>
 		</dependency>
 
-		<!--
-		https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
-		<!-- 		<dependency> -->
-		<!-- 			<groupId>org.hibernate</groupId> -->
-		<!-- 			<artifactId>hibernate-validator</artifactId> -->
-		<!-- 			<version>4.2.0.Final</version> -->
-		<!-- 		</dependency> -->
-
-		<!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
-		<dependency>
-			<groupId>javax.validation</groupId>
-			<artifactId>validation-api</artifactId>
-			<version>2.0.1.Final</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.olap4j/olap4j -->
 		<dependency>
 			<groupId>org.olap4j</groupId>
 			<artifactId>olap4j</artifactId>
@@ -87,22 +76,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>jakarta.validation</groupId>
-					<artifactId>jakarta.validation-api</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
-		<!-- 		<dependency> -->
-		<!-- 			<groupId>org.springframework.boot</groupId> -->
-		<!-- 			<artifactId>spring-boot-devtools</artifactId> -->
-		<!-- 			<scope>runtime</scope> -->
-		<!-- 		</dependency> -->
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
-<!--			<scope>provided</scope>-->
+			<scope>provided</scope>
 		</dependency>
 		<!-- thymeleaf -->
 		<dependency>
@@ -144,7 +123,7 @@
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>bootstrap</artifactId>
-			<version>${bootstrap.version}</version>
+			<version>4.2.1</version>
 		</dependency>
 		<!-- JASPER -->
 		<!-- https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports -->
@@ -181,23 +160,24 @@
 		</dependency>
 	</dependencies>
 
-	<!--<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>-->
-
 	<build>
+		<finalName>gri</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<mainClass>co.edu.uniquindio.gri.StartWebApplication</mainClass>
+					<finalName>gri</finalName>
+					<skipRepackaging>true</skipRepackaging>
 				</configuration>
+			</plugin>
+			<plugin>
+    			<groupId>org.apache.maven.plugins</groupId>
+    			<artifactId>maven-war-plugin</artifactId>
+    			<configuration>
+        			<outputFileName>gri</outputFileName>
+    			</configuration>
 			</plugin>
 		</plugins>
 	</build>

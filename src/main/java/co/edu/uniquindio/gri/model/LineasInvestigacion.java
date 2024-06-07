@@ -28,7 +28,7 @@ public class LineasInvestigacion implements Serializable {
 	
 	/** The id. */
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	private long id;
 

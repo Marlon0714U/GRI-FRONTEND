@@ -1,15 +1,11 @@
-target/classes
-target/gri-0.0.1-SNAPSHOT.war
-target/gri-0.0.1-SNAPSHOT.war.original
-target/gri-0.0.1-SNAPSHOT/
-target/maven-archiver/
-target/maven-status/
-target/m2e-wtp/web-resources/META-INF/maven/gri/gri/pom.properties
+HELP.md
 # Default ignored files
 /shelf/
 /workspace.xml
 /target/
 !.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
 
 ### STS ###
 .apt_generated
