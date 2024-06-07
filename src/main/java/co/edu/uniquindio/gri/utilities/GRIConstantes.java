@@ -17,6 +17,16 @@ public class GRIConstantes {
 	 * Mensajes de respuesta
 	 */
 
+	public static final String RESPUESTA_CREAR_GRUPO_CORRECTO="El grupo de investigacion se ha registrado con éxito";
+	public static final String RESPUESTA_CREAR_GRUPO_ERROR_YA_EXISTE="El grupo de investigacion ya se encuentra registrado";
+	public static final String RESPUESTA_MODIFICAR_GRUPO_ERROR_NO_EXISTE="El grupo de investigacion que intenta modificar ya no existe";
+	public static final String RESPUESTA_MODIFICAR_GRUPO_CORRECTO="El grupo de investigacion se ha modificado exitosamente";
+	public static final String RESPUESTA_CREAR_INVESTIGADOR_CORRECTO="El investigador se ha registrado con éxito";
+	public static final String RESPUESTA_CREAR_INVESTIGADOR_ERROR_YA_EXISTE="El investigador ya se encuentra registrado";
+	public static final String RESPUESTA_MODIFICAR_INVESTIGADOR_ERROR_NO_EXISTE="El investigador que intenta modificar ya no existe";
+	public static final String RESPUESTA_MODIFICAR_INVESTIGADOR_CORRECTO="El investigador se ha modificado exitosamente";
+
+
 	public static final String RESPUESTA_CREAR_USUARIO_CORRECTO="El usuario se ha creado exitosamente";
 	public static final String RESPUESTA_CREAR_USUARIO_ERROR_YA_EXISTE="El usuario ingresado ya se encuentra registrado";
 	public static final String RESPUESTA_MODIFICAR_USUARIO_ERROR_NO_EXISTE="El usuario seleccionado no se encuentra registrado";

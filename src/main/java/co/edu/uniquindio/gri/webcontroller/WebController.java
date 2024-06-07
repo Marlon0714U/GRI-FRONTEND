@@ -828,9 +828,70 @@ public class WebController {
 		return "centros";
 	}
 
+
+	/*administracion de investigadores*/
+	@GetMapping("/AdmInvestigadores")
+	public String getAllInvestigadores(Model model) {
+
+		// model.addAttribute("titulo", "USUARIOS");
+		model.addAttribute("id", 0);
+
+		model.addAttribute("listaInvestigadores", investigadorDAO.getAll());
+
+		return "admin/investigadores/investigadores";
+
+	}
+
+	@PostMapping("/investigadores/save")
+	public @ResponseBody Respuesta saveInvestigador(@ModelAttribute Investigador investigador) {
+		Respuesta respuesta = new Respuesta();
+
+		if (investigador != null) {
+			Investigador consulta = investigadorDAO.findOne(investigador.getId());
+
+			Investigador peticion = new Investigador();
+			peticion.setId(investigador.getId());
+			peticion.setNombre(investigador.getNombre());
+			peticion.setNivelAcademico(investigador.getNivelAcademico());
+			peticion.setCategoria(investigador.getCategoria());
+			peticion.setPertenencia(investigador.getPertenencia());
+			peticion.setSexo(investigador.getSexo());
+
+			if (consulta == null) {
+				// Guardar
+				investigadorDAO.save(peticion);
+				respuesta.setCodigoRespuesta(GRIConstantes.CODIGO_RESPUESTA_EXITOSO);
+				respuesta.setMensajeRespuesta(GRIConstantes.RESPUESTA_CREAR_INVESTIGADOR_CORRECTO);
+			} else {
+				// Actualizar
+				investigadorDAO.save(peticion);
+				respuesta.setCodigoRespuesta(GRIConstantes.CODIGO_RESPUESTA_EXITOSO);
+				respuesta.setMensajeRespuesta(GRIConstantes.RESPUESTA_MODIFICAR_INVESTIGADOR_CORRECTO);
+			}
+		}
+		return respuesta;
+	}
+
+
+	/*administracion de grupos de ivnestigacion*/
+	@GetMapping("/Admgrupos")
+	public String getAllGrupos(Model model) {
+
+		// model.addAttribute("titulo", "USUARIOS");
+		model.addAttribute("id", 0);
+
+		model.addAttribute("listaGrupos", grupoDAO.getAll());
+		model.addAttribute("centros", centroDAO.getAll());
+		model.addAttribute("programas", programaDAO.getAll());
+		//model.addAttribute("facultades", facultadDAO.getAll());
+
+		return "admin/grupos/grupos";
+
+	}
+
 	@PostMapping("grupos/save/{idCentro}/{idPrograma}")
 	public @ResponseBody Respuesta saveGrupo(Grupo grupo, @PathVariable("idCentro") Long idCentro,
-			@PathVariable("idPrograma") Long idPrograma) {
+											 @PathVariable("idPrograma") Long idPrograma) {
 
 		Respuesta respuesta = new Respuesta();
 
@@ -851,7 +912,7 @@ public class WebController {
 			peticion.setInformacionGeneral(grupo.getInformacionGeneral());
 			peticion.setCentro(centroAsociada);
 			peticion.setProgramas(programaAsociado);
-	
+
 
 			if (consulta == null) {
 
@@ -860,17 +921,25 @@ public class WebController {
 				peticion.setAnioFundacion(util.obtenerFechaSistma());
 				grupoDAO.save(peticion);
 				respuesta.setCodigoRespuesta(GRIConstantes.CODIGO_RESPUESTA_EXITOSO);
-				respuesta.setMensajeRespuesta(GRIConstantes.RESPUESTA_CREAR_CENTRO_CORRECTO);
+				respuesta.setMensajeRespuesta(GRIConstantes.RESPUESTA_CREAR_GRUPO_CORRECTO);
 			} else {
 
 				// actualizar
 				peticion.setAnioFundacion(grupo.getAnioFundacion());
 				grupoDAO.save(peticion);
 				respuesta.setCodigoRespuesta(GRIConstantes.CODIGO_RESPUESTA_EXITOSO);
-				respuesta.setMensajeRespuesta(GRIConstantes.RESPUESTA_MODIFICAR_CENTRO_CORRECTO);
+				respuesta.setMensajeRespuesta(GRIConstantes.RESPUESTA_MODIFICAR_GRUPO_CORRECTO);
 			}
 		}
 		return respuesta;
+	}
+
+	@GetMapping("grupos/delete/{id}")
+	public String deleteGrupo(@PathVariable("id") Long id, Model model) {
+
+		grupoDAO.delete(id);
+
+		return "redirect:/Admgrupos";
 	}
 
 	@GetMapping("gruposInves/active/{idGrupo}/{idInvestigador}")

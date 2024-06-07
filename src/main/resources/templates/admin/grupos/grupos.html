@@ -6,103 +6,103 @@
 </head>
 
 <body id="page-top" class="sidebar-toggled">
-	<nav th:replace="fragments/nav :: nav('card-0-nav')"></nav>
-	<nav th:replace="fragments/secondarynav"></nav>
+<nav th:replace="fragments/nav :: nav('card-0-nav')"></nav>
+<nav th:replace="fragments/secondarynav"></nav>
 
-	<div id="wrapper">
-		<div id="content-wrapper">
-			<div class="container-fluid">
-				<div class="region-hero">
-					<div class="contenedor-hero">
-						<div class="contenido-hero">
-							<h1 class="titulo-hero">Grupos de Investigación</h1>
-							Administración de grupos.
-						</div>
+<div id="wrapper">
+	<div id="content-wrapper">
+		<div class="container-fluid">
+			<div class="region-hero">
+				<div class="contenedor-hero">
+					<div class="contenido-hero">
+						<h1 class="titulo-hero">Grupos de Investigación</h1>
+						Administración de grupos.
 					</div>
 				</div>
-				<div class="separador-1"></div>
-				<a class="btn btn-primary" id="btnCrearGrupo">Agregar grupo</a> <br />
-				<br />
-				<div class="contenedor mb-3">
-					<div class="contenedor-header">
-						<i class="fas fa-table"></i> Lista de Grupos
-					</div>
-					<div class="contenedor-body">
-						<div id="">
-							<table id="tabla_Grupos_CRUD"
-								th:class="'table-' + ${id} + ' table-striped table-bordered table-hover table-responsive-lg'"
-								style="width: 100%">
-								<thead>
-									<tr>
-										<th class="centrarItemsTabla">CÓDIGO COLCIENCIAS</th>
-										<th class="centrarItemsTabla">NOMBRE</th>
-										<th class="centrarItemsTabla">FACULTAD</th>
-										<th class="centrarItemsTabla">CENTRO</th>
-										<th class="centrarItemsTabla">LÍDER</th>
-										<th class="centrarItemsTabla">CATEGORÍA</th>
-										<th class="centrarItemsTabla">ACCIONES</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr th:each="grupo : ${listaGrupos}" th:if="${grupo.id}>0"
-										th:id="'trGrupo'+${grupo.id}">
-										<td class="centrarItemsTabla" th:text="${grupo.id}"></td>
-										<td class="centrarItemsTabla" th:text="${grupo.nombre}"></td>
-										<td class="centrarItemsTabla"
-											th:text="${grupo.programas.get(0).facultad.nombre == 'SIN FACULTAD'}?${grupo.centro.facultad.nombre}:${grupo.programas.get(0).facultad.nombre}">
-										</td>
-										<td class="centrarItemsTabla" th:text="${grupo.centro.nombre}"></td>
-										<td class="centrarItemsTabla" th:text="${grupo.lider}"></td>
-										<td class="centrarItemsTabla" th:switch="${grupo.categoria}"><span
-												th:case="'N/D'">NO RECONOCIDO</span> <span
-												th:case="'SIN CATEGORÍA'">RECONOCIDO</span>
-											<div th:case="*">
-												<div th:text="${grupo.categoria}" />
-											</div>
-										</td>
-										<td class="d-flex flex-nowrap align-items-center justify-content-center">
-											<a class="btn btn-info mr-2"
-												th:onclick="editarGrupo([[${grupo}]]);">Editar</a>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
+			</div>
+			<div class="separador-1"></div>
+			<a class="btn btn-primary" id="btnCrearGrupo">Agregar grupo</a> <br />
+			<br />
+			<div class="contenedor mb-3">
+				<div class="contenedor-header">
+					<i class="fas fa-table"></i> Lista de Grupos
+				</div>
+				<div class="contenedor-body">
+					<div id="">
+						<table id="tabla_Grupos_CRUD"
+							   th:class="'table-' + ${id} + ' table-striped table-bordered table-hover table-responsive-lg'"
+							   style="width: 100%">
+							<thead>
+							<tr>
+								<th class="centrarItemsTabla">CÓDIGO COLCIENCIAS</th>
+								<th class="centrarItemsTabla">NOMBRE</th>
+								<th class="centrarItemsTabla">FACULTAD</th>
+								<th class="centrarItemsTabla">CENTRO</th>
+								<th class="centrarItemsTabla">LÍDER</th>
+								<th class="centrarItemsTabla">CATEGORÍA</th>
+								<th class="centrarItemsTabla">ACCIONES</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr th:each="grupo : ${listaGrupos}" th:if="${grupo.id}>0"
+								th:id="'trGrupo'+${grupo.id}">
+								<td class="centrarItemsTabla" th:text="${grupo.id}"></td>
+								<td class="centrarItemsTabla" th:text="${grupo.nombre}"></td>
+								<td class="centrarItemsTabla"
+									th:text="${grupo.programas.get(0).facultad.nombre == 'SIN FACULTAD'}?${grupo.centro.facultad.nombre}:${grupo.programas.get(0).facultad.nombre}">
+								</td>
+								<td class="centrarItemsTabla" th:text="${grupo.centro.nombre}"></td>
+								<td class="centrarItemsTabla" th:text="${grupo.lider}"></td>
+								<td class="centrarItemsTabla" th:switch="${grupo.categoria}"><span
+										th:case="'N/D'">NO RECONOCIDO</span> <span
+										th:case="'SIN CATEGORÍA'">RECONOCIDO</span>
+									<div th:case="*">
+										<div th:text="${grupo.categoria}" />
+									</div>
+								</td>
+								<td class="d-flex flex-nowrap align-items-center justify-content-center">
+									<a class="btn btn-info mr-2"
+									   th:onclick="editarGrupo([[${grupo}]]);">Editar</a>
+								</td>
+							</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<div th:replace="fragments/footer"></div>
-	<div th:include="admin/grupos/save.html"></div>
+<div th:replace="fragments/footer"></div>
+<div th:include="admin/grupos/save.html"></div>
 </body>
 
 <script th:inline="javascript">
 	var data = [[${grupos}]];
 	/**
-			$.extend($.fn.dataTable.defaults, {
-				
-				language: {
-					processing: "Procesamiento en curso...",
-					search: "Buscar: ",
-					lengthMenu: "Mostrando _MENU_ elementos",
-					info: "Mostrando _START_ a _END_ de _TOTAL_ elementos",
-					infoEmpty: "Mostrando 0 a 0 de 0 elementos",
-					infoFiltered: "(filtrado de _MAX_ elementos en total)",
-					infoPostFix: "",
-					loadingRecords: "Cargando resultados...",
-					zeroRecords: "No hay información para mostrar",
-					emptyTable: "No hay información para mostrar",
-					paginate: {
-						first: "Primera",
-						previous: "Anterior",
-						next: "Siguiente",
-						last: "última"
-					}
-				}
-			});
-	*/
+	 $.extend($.fn.dataTable.defaults, {
+
+	 language: {
+	 processing: "Procesamiento en curso...",
+	 search: "Buscar: ",
+	 lengthMenu: "Mostrando _MENU_ elementos",
+	 info: "Mostrando _START_ a _END_ de _TOTAL_ elementos",
+	 infoEmpty: "Mostrando 0 a 0 de 0 elementos",
+	 infoFiltered: "(filtrado de _MAX_ elementos en total)",
+	 infoPostFix: "",
+	 loadingRecords: "Cargando resultados...",
+	 zeroRecords: "No hay información para mostrar",
+	 emptyTable: "No hay información para mostrar",
+	 paginate: {
+	 first: "Primera",
+	 previous: "Anterior",
+	 next: "Siguiente",
+	 last: "última"
+	 }
+	 }
+	 });
+	 */
 	let modalGrupo = document.getElementById("agregarGruposModal");
 	let span = document.getElementsByClassName("closeModalGrupo")[0];
 	let body = document.getElementsByTagName("body")[0];
@@ -136,17 +136,17 @@
 		});
 
 		/**
-			let grupos = $(".roleGrupo");
-	
-			for(let i = 0; i<grupos.length; i++){
-				
-				if(grupos[i].innerHTML=="ROLE_ADMIN"){
-					grupos[i].innerHTML="ADMINISTRADOR";
-				}else{
-					grupos[i].innerHTML="Grupo";
-				}
-			}
-			*/
+		 let grupos = $(".roleGrupo");
+
+		 for(let i = 0; i<grupos.length; i++){
+
+		 if(grupos[i].innerHTML=="ROLE_ADMIN"){
+		 grupos[i].innerHTML="ADMINISTRADOR";
+		 }else{
+		 grupos[i].innerHTML="Grupo";
+		 }
+		 }
+		 */
 
 		$('#btnCrearGrupo').on('click', function (e) {
 
@@ -263,7 +263,6 @@
 
 
 	function editarGrupo(grupo) {
-
 		limpiarCampos();
 
 		idCentroSeleccionado = grupo.centro.id;

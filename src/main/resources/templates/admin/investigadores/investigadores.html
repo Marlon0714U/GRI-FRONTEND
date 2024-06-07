@@ -6,73 +6,73 @@
 </head>
 
 <body id="page-top" class="sidebar-toggled">
-	<nav th:replace="fragments/nav :: nav('card-0-nav')"></nav>
-	<nav th:replace="fragments/secondarynav"></nav>
+<nav th:replace="fragments/nav :: nav('card-0-nav')"></nav>
+<nav th:replace="fragments/secondarynav"></nav>
 
-	<div id="wrapper">
-		<div id="content-wrapper">
-			<div class="container-fluid">
-				<div class="region-hero">
-					<div class="contenedor-hero">
-						<div class="contenido-hero">
-							<h1 class="titulo-hero">Investigadores</h1>
-							Administración de investigadores.
-						</div>
+<div id="wrapper">
+	<div id="content-wrapper">
+		<div class="container-fluid">
+			<div class="region-hero">
+				<div class="contenedor-hero">
+					<div class="contenido-hero">
+						<h1 class="titulo-hero">Investigadores</h1>
+						Administración de investigadores.
 					</div>
 				</div>
-				<div class="separador-1"></div>
-				<a class="btn btn-primary" id="btnCrearInvestigador">Agregar investigador</a> <br />
-				<br />
-				<div class="contenedor mb-3">
-					<div class="contenedor-header">
-						<i class="fas fa-table"></i> Lista de Investigadores
-					</div>
-					<div class="contenedor-body">
-						<div id="">
-							<table id="tabla_Investigadores_CRUD"
-								th:class="'table-' + ${id} + ' table-striped table-bordered table-hover table-responsive-lg'"
-								style="width: 100%">
-								<thead>
-									<tr>
-										<th class="centrarItemsTabla">CÓDIGO INVESTIGADOR</th>
-										<th class="centrarItemsTabla">NOMBRE</th>
-										<th class="centrarItemsTabla">NIVEL ACADEMICO</th>
-										<th class="centrarItemsTabla">CATEGORÍA</th>
-										<th class="centrarItemsTabla">PERTENENCIA</th>
-										<th class="centrarItemsTabla">SEXO</th>
-										<th class="centrarItemsTabla">ACCIONES</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr th:each="investigador : ${listaInvestigadores}" th:if="${investigador.id}>0"
-										th:id="'trinvestigador'+${investigador.id}">
-										<td class="centrarItemsTabla" th:text="${investigador.id}"></td>
-										<td class="centrarItemsTabla" th:text="${investigador.nombre}"></td>
-										<td class="centrarItemsTabla" th:text="${investigador.nivelAcademico}"></td>
-										<td class="centrarItemsTabla" th:text="${investigador.categoria}"></td>
-										<td class="centrarItemsTabla" th:switch="${investigador.pertenencia}"><span
-												th:case="null">NO TIENE</span>
-											<div th:case="*">
-												<div th:text="${investigador.pertenencia}" />
-											</div>
-										</td>
-										<td class="centrarItemsTabla" th:text="${investigador.sexo}"></td>
-										<td class="d-flex flex-nowrap align-items-center justify-content-center">
-											<a class="btn btn-info mr-2"
-												th:onclick="editarInvestigador([[${investigador}]]);">Editar</a>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
+			</div>
+			<div class="separador-1"></div>
+			<a class="btn btn-primary" id="btnCrearInvestigador">Agregar investigador</a> <br />
+			<br />
+			<div class="contenedor mb-3">
+				<div class="contenedor-header">
+					<i class="fas fa-table"></i> Lista de Investigadores
+				</div>
+				<div class="contenedor-body">
+					<div id="">
+						<table id="tabla_Investigadores_CRUD"
+							   th:class="'table-' + ${id} + ' table-striped table-bordered table-hover table-responsive-lg'"
+							   style="width: 100%">
+							<thead>
+							<tr>
+								<th class="centrarItemsTabla">CÓDIGO INVESTIGADOR</th>
+								<th class="centrarItemsTabla">NOMBRE</th>
+								<th class="centrarItemsTabla">NIVEL ACADEMICO</th>
+								<th class="centrarItemsTabla">CATEGORÍA</th>
+								<th class="centrarItemsTabla">PERTENENCIA</th>
+								<th class="centrarItemsTabla">SEXO</th>
+								<th class="centrarItemsTabla">ACCIONES</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr th:each="investigador : ${listaInvestigadores}" th:if="${investigador.id}>0"
+								th:id="'trinvestigador'+${investigador.id}">
+								<td class="centrarItemsTabla" th:text="${investigador.id}"></td>
+								<td class="centrarItemsTabla" th:text="${investigador.nombre}"></td>
+								<td class="centrarItemsTabla" th:text="${investigador.nivelAcademico}"></td>
+								<td class="centrarItemsTabla" th:text="${investigador.categoria}"></td>
+								<td class="centrarItemsTabla" th:switch="${investigador.pertenencia}"><span
+										th:case="null">NO TIENE</span>
+									<div th:case="*">
+										<div th:text="${investigador.pertenencia}" />
+									</div>
+								</td>
+								<td class="centrarItemsTabla" th:text="${investigador.sexo}"></td>
+								<td class="d-flex flex-nowrap align-items-center justify-content-center">
+									<a class="btn btn-info mr-2"
+									   th:onclick="editarInvestigador([[${investigador}]]);">Editar</a>
+								</td>
+							</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<div th:replace="fragments/footer"></div>
-	<div th:include="admin/investigadores/save.html"></div>
+<div th:replace="fragments/footer"></div>
+<div th:include="admin/investigadores/save.html"></div>
 </body>
 
 <script th:inline="javascript">
@@ -163,17 +163,17 @@
 		$('.inputInvestigadores').val("");
 	}
 
-	function editarInvestigador(Investigador) {
+	function editarInvestigador(investigador) {
 
 		limpiarCampos();
-		console.log(Investigador)
-		idInvestigador = Investigador.id;
-		$('#id').val(Investigador.id);
-		$('#nombre').val(Investigador.nombre);
-		$('#nivelAcademico').val(Investigador.nivelAcademico);
-		$('#categoria').val(Investigador.categoria);
-		$('#pertenencia').val(Investigador.pertenencia);
-		$('#sexo').val(Investigador.sexo);
+		console.log(investigador)
+		idInvestigador = investigador.id;
+		$('#id').val(investigador.id);
+		$('#nombre').val(investigador.nombre);
+		$('#nivelAcademico').val(investigador.nivelAcademico);
+		$('#categoria').val(investigador.categoria);
+		$('#pertenencia').val(investigador.pertenencia);
+		$('#sexo').val(investigador.sexo);
 
 		modalInvestigador.style.display = "block";
 		body.style.position = "static";
@@ -184,6 +184,8 @@
 	}
 
 	function activarInvestigador(Investigador) {
+
+	}
 
 </script>
 
