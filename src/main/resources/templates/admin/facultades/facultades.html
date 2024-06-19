@@ -89,6 +89,8 @@
 			$('#formAgregarEditarFacultad').on('submit', function (e) {
 				e.preventDefault();
 				let data = $(this).serialize();
+				console.log("el investigador en data form es: "+data)
+
 				// console.log(data)
 				$.ajax({
 					type: "POST",

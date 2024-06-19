@@ -74,14 +74,13 @@
 <div th:replace="fragments/footer"></div>
 <div th:include="admin/investigadores/save.html"></div>
 </body>
-
 <script th:inline="javascript">
 	var data = [[${investigadores}]];
 
 	let modalInvestigador = document.getElementById("agregarInvestigadoresModal");
 	let span = document.getElementsByClassName("closeModalInvestigador")[0];
 	let body = document.getElementsByTagName("body")[0];
-	//	Documento listo
+	// Documento listo
 	let idInvestigador = 0;
 	$(document).ready(function () {
 		estilosBotones();
@@ -104,17 +103,14 @@
 		});
 
 		$('#btnCrearInvestigador').on('click', function (e) {
-
 			modalInvestigador.style.display = "block";
-
 			body.style.position = "static";
 			body.style.height = "100%";
 			body.style.overflow = "hidden";
-
 			$('#idTitleCrearInvestigador').text('Crear Investigador');
 			limpiarCampos();
 			$('#campoid').val("-1");
-
+			$('.inputInvestigadores').removeAttr('readonly');
 		});
 
 		$('.closeModalInvestigador').on('click', function (e) {
@@ -135,38 +131,82 @@
 
 		// al hacer click en el boton del modal guardar
 		$('#BtnGuardarInvestigador').click(function () {
-			let variables = $('.requaired');
-			var contador = variables.length;
-			for (var i = 0; i < variables.length; i++) {
-				if ($(variables[i]).val() == '' || $(variables[i]).val() == undefined) {
-					$(variables[i]).addClass('requerido');
-					contador = contador - 1;
+			let campos = $('.inputInvestigadores');
+			let valido = true;
+
+			campos.each(function() {
+				if ($(this).val() === '') {
+					$(this).addClass('requerido');
+					valido = false;
 				} else {
-					$(variables[i]).removeClass('requerido');
+					$(this).removeClass('requerido');
 				}
-			}
-			if (contador != variables.length) {
+			});
+
+			if (!valido) {
 				Swal.fire({
 					title: '¡Error!',
 					text: "Existen campos obligatorios que no se han registrado",
 					icon: 'error',
 					confirmButtonText: 'Aceptar',
-					allowOutsideClick: () => false
-				})
+					allowOutsideClick: false
+				});
 				return false;
 			}
+
+			let data = $('#form').serialize();
+			console.log("El investigador en data form es: " + data);
+			$.ajax({
+				type: "POST",
+				url: "investigadores/save",
+				data: data,
+				beforeSend: function () {
+					Swal.fire({
+						title: 'Cargando...',
+						allowOutsideClick: false,
+						onBeforeOpen: () => {
+							Swal.showLoading();
+						}
+					});
+				},
+				success: function (response) {
+					Swal.close();
+					if (response.codigoRespuesta === 200) {
+						Swal.fire({
+							icon: 'success',
+							title: response.mensajeRespuesta,
+						}).then((value) => {
+							location.reload();
+						});
+					} else {
+						Swal.fire({
+							title: '!Información¡',
+							text: response.mensajeRespuesta,
+							icon: 'info',
+							confirmButtonText: 'Aceptar',
+							allowOutsideClick: false
+						});
+					}
+				},
+				error: function () {
+					Swal.close();
+					Swal.fire({
+						title: '¡Error!',
+						text: 'Error de conexión',
+						icon: 'error',
+						confirmButtonText: 'Aceptar',
+						allowOutsideClick: false
+					});
+				}
+			});
 		});
 	});
-
 
 	function limpiarCampos() {
 		$('.inputInvestigadores').val("");
 	}
 
-	function editarInvestigador(investigador) {
-
-		limpiarCampos();
-		console.log(investigador)
+	function setearCamposModalEditar(investigador) {
 		idInvestigador = investigador.id;
 		$('#id').val(investigador.id);
 		$('#nombre').val(investigador.nombre);
@@ -174,6 +214,12 @@
 		$('#categoria').val(investigador.categoria);
 		$('#pertenencia').val(investigador.pertenencia);
 		$('#sexo').val(investigador.sexo);
+	}
+
+	function editarInvestigador(investigador) {
+		console.log(investigador);
+		limpiarCampos();
+		setearCamposModalEditar(investigador);
 
 		modalInvestigador.style.display = "block";
 		body.style.position = "static";
@@ -184,9 +230,7 @@
 	}
 
 	function activarInvestigador(Investigador) {
-
 	}
-
 </script>
 
 

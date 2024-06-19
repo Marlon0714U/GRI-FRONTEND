@@ -3,65 +3,61 @@
 
 <head th:replace="fragments/header :: header('Modal_Investigadores')">
 	<meta charset="utf-8" />
-
 </head>
 
 <div id="agregarInvestigadoresModal" class="modalContainer">
 	<div class="modal-contentCruds">
-		<span class="closeModalInvestigador"></span>
+		<span class="closeModalInvestigador">&times;</span>
 		<h2 id="idTitleCrearInvestigador"></h2>
-		<form th:action="@{/Investigadores/save}" th:object="${investigador}" method="post"
-			enctype="multipart/form-data" id="form">
+		<form th:action="@{/investigadores/save}" th:object="${investigador}" method="post" enctype="multipart/form-data" id="form">
 			<div class="form-group">
-				<label>Id del Investigador: </label> <input type="text" readonly
-					class="form-control inputInvestigadores" name="id" id="id"
-					placeholder="Ingrese el ID del Investigador"> <small id="emailHelp" class="form-text text-muted">El
-					ID del investigador.</small>
+				<label>Id del Investigador: </label>
+				<input type="text" class="form-control inputInvestigadores" name="id" id="id" placeholder="Ingrese el ID del Investigador">
+				<small id="emailHelp" class="form-text text-muted">El ID del investigador.</small>
 			</div>
 			<div class="form-group">
-				<label>Nombre del Investigador: </label> <input type="text" readonly
-					class="form-control inputInvestigadores " name="nombre" id="nombre"
-					placeholder="Ingrese nombre del Investigador">
+				<label>Nombre del Investigador: </label>
+				<input type="text" class="form-control inputInvestigadores" name="nombre" id="nombre" placeholder="Ingrese nombre del Investigador">
 			</div>
 			<div class="form-group">
-				<label>Nivel academico: </label> <input type="text" readonly class="form-control inputInvestigadores "
-					name="nivelAcademico" id="nivelAcademico" placeholder="Ingrese nivel academico">
+				<label>Nivel academico: </label>
+				<input type="text" class="form-control inputInvestigadores" name="nivelAcademico" id="nivelAcademico" placeholder="Ingrese nivel academico">
 			</div>
 			<div class="form-group">
-				<label>Categoría: </label> <input type="text" readonly class="form-control inputInvestigadores "
-					name="categoria" id="categoria" placeholder="Ingrese Categoría">
+				<label>Categoría: </label>
+				<input type="text" class="form-control inputInvestigadores" name="categoria" id="categoria" placeholder="Ingrese Categoría">
 			</div>
 			<div class="form-group">
-				<label>Pertenencia: </label> <input type="text" readonly class="form-control inputInvestigadores "
-					name="pertenencia" id="pertenencia" placeholder="Ingrese pertenencia">
+				<label>Pertenencia: </label>
+				<input type="text" class="form-control inputInvestigadores" name="pertenencia" id="pertenencia" placeholder="Ingrese pertenencia">
 			</div>
 			<div class="form-group">
-				<label>Sexo: </label> <input type="text" readonly class="form-control inputInvestigadores " name="sexo"
-					id="sexo" placeholder="Ingrese sexo">
+				<label>Sexo: </label>
+				<input type="text" class="form-control inputInvestigadores" name="sexo" id="sexo" placeholder="Ingrese sexo">
 			</div>
 		</form>
 		<div align="right" class="mt-5">
 			<a href="#" class="closeModalInvestigador">Cancelar</a>
-			<button class="btn btn-primary" onclick="enviar()">
+			<button class="btn btn-primary" id="BtnGuardarInvestigador">
 				<i class="fas fa-save"></i> Guardar
 			</button>
 		</div>
 	</div>
 </div>
 <script type="text/javascript">
-
-
-
 	function enviar() {
+		console.log("Enviando formulario");
 		file = document.getElementById("fileImage");
 		if (file.value != '') {
 			Swal.fire(
-				'¡Correcto!',
-				'Imagen cargada.',
-				'success'
+					'¡Correcto!',
+					'Imagen cargada.',
+					'success'
 			);
 			document.getElementById('form').submit();
+		} else {
+			console.log("Imagen no cargada");
 		}
 	}
-
 </script>
+</html>

@@ -77,50 +77,26 @@
 <div th:replace="fragments/footer"></div>
 <div th:include="admin/grupos/save.html"></div>
 </body>
-
 <script th:inline="javascript">
 	var data = [[${grupos}]];
-	/**
-	 $.extend($.fn.dataTable.defaults, {
-
-	 language: {
-	 processing: "Procesamiento en curso...",
-	 search: "Buscar: ",
-	 lengthMenu: "Mostrando _MENU_ elementos",
-	 info: "Mostrando _START_ a _END_ de _TOTAL_ elementos",
-	 infoEmpty: "Mostrando 0 a 0 de 0 elementos",
-	 infoFiltered: "(filtrado de _MAX_ elementos en total)",
-	 infoPostFix: "",
-	 loadingRecords: "Cargando resultados...",
-	 zeroRecords: "No hay información para mostrar",
-	 emptyTable: "No hay información para mostrar",
-	 paginate: {
-	 first: "Primera",
-	 previous: "Anterior",
-	 next: "Siguiente",
-	 last: "última"
-	 }
-	 }
-	 });
-	 */
 	let modalGrupo = document.getElementById("agregarGruposModal");
 	let span = document.getElementsByClassName("closeModalGrupo")[0];
 	let body = document.getElementsByTagName("body")[0];
-	//	Documento listo
 	let idCentroSeleccionado = 0;
 	let idProgramaSeleccionado = 0;
-	let anioFundacion;
+
 	$(document).ready(function () {
 		estilosBotones();
+
 		$('#centro').on('change', function () {
 			idCentroSeleccionado = this.value;
-			console.log(idCentroSeleccionado)
-		});
-		$('#programa').on('change', function () {
-			idProgramaSeleccionado = this.value;
-			console.log(idProgramaSeleccionado)
+			console.log('Centro seleccionado:', idCentroSeleccionado);
 		});
 
+		$('#programa').on('change', function () {
+			idProgramaSeleccionado = this.value;
+			console.log('Programa seleccionado:', idProgramaSeleccionado);
+		});
 
 		$("#tabla_Grupos_CRUD").DataTable({
 			"language": {
@@ -135,40 +111,23 @@
 			}
 		});
 
-		/**
-		 let grupos = $(".roleGrupo");
-
-		 for(let i = 0; i<grupos.length; i++){
-
-		 if(grupos[i].innerHTML=="ROLE_ADMIN"){
-		 grupos[i].innerHTML="ADMINISTRADOR";
-		 }else{
-		 grupos[i].innerHTML="Grupo";
-		 }
-		 }
-		 */
-
 		$('#btnCrearGrupo').on('click', function (e) {
-
 			modalGrupo.style.display = "block";
-
 			body.style.position = "static";
 			body.style.height = "100%";
 			body.style.overflow = "hidden";
-
 			$('#idTitleCrearGrupo').text('Crear Grupo');
 			limpiarCampos();
+			habilitarCampos();
 			$('#campoid').val("-1");
-
 		});
-
 
 		$('.closeModalGrupo').on('click', function (e) {
 			modalGrupo.style.display = "none";
 			body.style.position = "inherit";
 			body.style.height = "auto";
 			body.style.overflow = "visible";
-		})
+		});
 
 		window.onclick = function (event) {
 			if (event.target == modalGrupo) {
@@ -177,32 +136,7 @@
 				body.style.height = "auto";
 				body.style.overflow = "visible";
 			}
-		}
-
-		// al hacer click en el boton del modal guardar
-		$('#BtnGuardarGrupo').click(function () {
-			let variables = $('.requaired');
-			var contador = variables.length;
-			for (var i = 0; i < variables.length; i++) {
-				if ($(variables[i]).val() == '' || $(variables[i]).val() == undefined) {
-					$(variables[i]).addClass('requerido');
-					contador = contador - 1;
-				} else {
-					$(variables[i]).removeClass('requerido');
-				}
-			}
-			if (contador != variables.length) {
-				Swal.fire({
-					title: '¡Error!',
-					text: "Existen campos obligatorios que no se han registrado",
-					icon: 'error',
-					confirmButtonText: 'Aceptar',
-					allowOutsideClick: () => false
-				})
-				return false;
-			}
-		});
-
+		};
 
 		$('#guardarGruposModal').on('submit', function (e) {
 			e.preventDefault();
@@ -229,7 +163,6 @@
 						}).then((value) => {
 							location.reload();
 						});
-
 					} else {
 						Swal.fire({
 							title: '!Información¡',
@@ -237,9 +170,8 @@
 							icon: 'info',
 							confirmButtonText: 'Aceptar',
 							allowOutsideClick: () => false
-						})
+						});
 					}
-
 				},
 				error: function () {
 					Swal.close();
@@ -249,24 +181,29 @@
 						icon: 'error',
 						confirmButtonText: 'Aceptar',
 						allowOutsideClick: () => false
-					})
+					});
 				}
 			});
-
 		});
-
 	});
 
 	function limpiarCampos() {
 		$('.inputGrupos').val("");
 	}
 
+	function habilitarCampos() {
+		$('.inputGrupos').prop('readonly', false);
+		$('#centro').prop('disabled', false);
+		$('#programa').prop('disabled', false);
+	}
 
 	function editarGrupo(grupo) {
 		limpiarCampos();
+		habilitarCampos();
 
 		idCentroSeleccionado = grupo.centro.id;
 		idProgramaSeleccionado = grupo.programas[0].id;
+
 		$('#id').val(grupo.id);
 		$('#nombre').val(grupo.nombre);
 		$('#lider').val(grupo.lider);
@@ -284,8 +221,7 @@
 
 		$('#idTitleCrearGrupo').text('Editar Grupo');
 	}
-
-
 </script>
+
 
 </html>

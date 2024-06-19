@@ -845,9 +845,11 @@ public class WebController {
 	@PostMapping("/investigadores/save")
 	public @ResponseBody Respuesta saveInvestigador(@ModelAttribute Investigador investigador) {
 		Respuesta respuesta = new Respuesta();
+		System.out.println("el investigador es: " + investigador);
 
 		if (investigador != null) {
 			Investigador consulta = investigadorDAO.findOne(investigador.getId());
+		//	System.out.println("la consulta es: " + consulta);
 
 			Investigador peticion = new Investigador();
 			peticion.setId(investigador.getId());
@@ -1539,6 +1541,9 @@ public class WebController {
 	@PostMapping("centros/save/{idFacultad}")
 	public @ResponseBody Respuesta saveCentro(Centro centro, @PathVariable("idFacultad") Long idFacultad) {
 
+		System.out.println("centro: " + centro);
+		System.out.println("idFacultad: " + idFacultad);
+
 		Respuesta respuesta = new Respuesta();
 
 		if (centro != null) {
@@ -1776,13 +1781,27 @@ public class WebController {
 			@RequestParam(name = Util.PARAM_ID, required = false, defaultValue = Util.PARAM_UNIVERSITY_LEVEL_ID) String id,
 			Model model, HttpServletResponse response) throws SQLException, IOException, JRException {
 
+		System.out.println("ID: " + id);
+		System.out.println("Type: " + type);
+
+
 		Connection conexion = jdbcTemplate.getDataSource().getConnection();
 
 		List<JasperPrint> jasperPrintList = new ArrayList<>();
 
+
+try{
 		configurarReportes(jasperPrintList, type, id, conexion);
 
+		if (jasperPrintList.isEmpty()) {
+			throw new JRException("No se encontraron reportes para el tipo y ID proporcionados");
+		}
+
 		imprimirReporte(response, jasperPrintList);
+	} catch (JRException e) {
+		// Manejo de la excepción
+		e.printStackTrace();
+	}
 
 		conexion.close();
 
@@ -1796,6 +1815,8 @@ public class WebController {
 	 */
 	private void imprimirReporte(HttpServletResponse response, List<JasperPrint> jasperPrintList)
 			throws IOException, JRException {
+
+		System.out.println("imprimirReportemethod");
 
 		response.setContentType("application/pdf");
 		response.setHeader("Content-disposition", "inline; filename=reporte de investigaciÃ³n.pdf");
@@ -1837,6 +1858,8 @@ public class WebController {
 		List<JasperPrint> jasperPrintList = new ArrayList<>();
 
 		configurarReportes(jasperPrintList, type, id, conexion);
+
+
 
 		descargarReportePDF(response, jasperPrintList);
 
@@ -1886,6 +1909,10 @@ public class WebController {
 	private void configurarReportes(List<JasperPrint> jasperPrintList, String type, String id, Connection conexion)
 			throws JRException {
 
+		System.out.println("Configurando reportes con type: " + type + " y id: " + id);
+		System.out.println("Cantidad inicial de jasperPrintList : "+ jasperPrintList.size() );
+
+
 		BigInteger cantidad_grupos = new BigInteger(Util.PARAM_UNIVERSITY_LEVEL_ID);
 		BigInteger cantidad_investigadores = new BigInteger(Util.PARAM_UNIVERSITY_LEVEL_ID);
 		BigInteger cantidad_producciones = new BigInteger(Util.PARAM_UNIVERSITY_LEVEL_ID);
@@ -1933,6 +1960,7 @@ public class WebController {
 
 		switch (type) {
 		case Util.FACULTY_PARAM_ID: {
+			System.out.println("buscando en la facultad ");
 			Facultad f = facultadDAO.getFacultadById(Long.parseLong(id));
 			facultad = true;
 			title_facultad = f.getNombre();
@@ -1972,6 +2000,7 @@ public class WebController {
 			break;
 		}
 		case "p": {
+			System.out.println("buscando en programa");
 			Programa p = programaDAO.getProgramaById(Long.parseLong(id));
 			programa = true;
 			title_programa = p.getNombre();
@@ -2125,8 +2154,16 @@ public class WebController {
 			if (universidad) {
 
 				if (type.equals(Util.UNIVERSITY_PARAM_ID)) {
+					System.out.println("type u equals to u UNIVERSITY_PARAM_ID");
 
 					input = this.getClass().getResourceAsStream("/reportes/" + type + "_" + id + "_" + aux + ".jasper");
+					if (input == null) {
+						System.out.println("Archivo jasper no encontrado: " +"/reportes/" + type + "_" + id + "_" + aux + ".jasper" );
+						break;
+					} else {
+						System.out.println("Archivo jasper encontrado: " + "/reportes/" + type + "_" + id + "_" + aux + ".jasper");
+					}
+
 				}
 			} else {
 				if (facultad) {
@@ -2229,6 +2266,9 @@ public class WebController {
 			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametros, conexion);
 			jasperPrintList.add(jasperPrint);
+
+			System.out.println("Cantidad de reportes configurados: " + jasperPrintList.size());
+
 
 		}
 
