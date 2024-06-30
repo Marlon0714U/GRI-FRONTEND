@@ -288,7 +288,7 @@ public class TipologiasController {
 		String[] datos = new String[3];
 
 		if (type.equals("u")) {
-			datos[0] = "TIPOLOGÃ�A DE PRODUCTOS PARA LA UNIVERSIDAD DEL QUINDÃ�O";
+			datos[0] = "TIPOLOGÍA DE PRODUCTOS PARA LA UNIVERSIDAD DEL QUINDÍO";
 			datos[1] = "card-0";
 			datos[2] = "0";
 

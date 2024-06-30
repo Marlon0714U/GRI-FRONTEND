@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="fragments/header :: header('Reporte')">
-	<meta charset="utf-8" />
+	<meta charset="UTF-8" />
 </head>
 
 <body id="page-top" class="sidebar-toggled">
@@ -76,6 +76,8 @@
 	<script th:inline="javascript">
 		var producciones = [[${producciones}]];
 		var url = "/gri/rest/service/producciones/" + [[${param.type}]] + "/" + [[${param.id}]] + "/" + [[${param.prod}]];
+		//imprimir en consola de url
+		console.log("la url al controller es:"+url);
 		//var url = [[${ param.servidor }]] + [[${ param.type }]] + "/" + [[${ param.id }]] + "/" + [[${ param.prod }]];
 
 		$.ajax({
@@ -94,6 +96,8 @@
 						anio = 0;
 					} else {
 						var anio = parseInt(item.anio);
+						//imprimir como se esta haciendo el antes y despues
+						console.log("el anio parsedInt es: "+anio);
 					}
 					if (res.some(e => e.name === anio)) {
 						const i = res.findIndex(obj => obj.name === anio);
@@ -111,6 +115,7 @@
 				res.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
 
 				var titulo = [[${nombre}]] + " - " + [[${tipo}]];
+				console.log("el titulo es: "+titulo);
 				const element = document.querySelector('.' + [[${color} + '-nav']]);
 				const style = getComputedStyle(element);
 				const color = style.backgroundColor;

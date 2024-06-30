@@ -878,6 +878,7 @@ public class WebController {
 	/*administracion de grupos de ivnestigacion*/
 	@GetMapping("/Admgrupos")
 	public String getAllGrupos(Model model) {
+		System.out.println("SE OBTIENE LOS GRUPOS ADM");
 
 		// model.addAttribute("titulo", "USUARIOS");
 		model.addAttribute("id", 0);
@@ -1277,7 +1278,7 @@ public class WebController {
 		case Util.UNIVERSITY_PARAM_ID:
 			List<Facultad> facultades = facultadDAO.getAllFacultades();
 
-			model.addAttribute("nombre", "TipologÃ­a De Productos Para La Universidad Del QuindÃ­o");
+			model.addAttribute("nombre", "Tipología De Productos Para La Universidad Del Quindío");
 			model.addAttribute("lista", facultades);
 			model.addAttribute("subtipo", Util.FACULTY_PARAM_ID);
 			model.addAttribute("color", "card-0");
@@ -1288,7 +1289,7 @@ public class WebController {
 			Facultad f = facultadDAO.getFacultadById(Long.parseLong(id));
 			List<Programa> programas = programaDAO.getProgramasFacultad(Long.parseLong(id));
 
-			model.addAttribute("nombre", "TipologÃ­a de Productos Para la Facultad de " + f.getNombre());
+			model.addAttribute("nombre", "Tipología de Productos Para la Facultad de " + f.getNombre());
 			model.addAttribute("lista", programas);
 			model.addAttribute("subtipo", "p");
 			model.addAttribute("color", "card-" + f.getId());
@@ -1330,7 +1331,7 @@ public class WebController {
 			Investigador i = investigadorDAO.findOne(Long.parseLong(id));
 
 			model.addAttribute("nombre",
-					"TipologÃ­a de Productos de " + utilidades.convertToTitleCaseIteratingChars(i.getNombre()));
+					"Tipología de Productos de " + utilidades.convertToTitleCaseIteratingChars(i.getNombre()));
 			model.addAttribute("color", "card-0");
 			break;
 		}
@@ -2338,7 +2339,7 @@ try{
 		case Util.FACULTY_PARAM_ID:
 			Facultad f = facultadDAO.getFacultadById(Long.parseLong(id));
 
-			datos[0] = "EstadÃ­sticas Generales de la Facultad de " + f.getNombre();
+			datos[0] = "Estadísticas Generales de la Facultad de " + f.getNombre();
 			datos[1] = "card-" + f.getId();
 			datos[2] = "btn-title-grid-" + f.getId();
 			datos[3] = "btn-total-grid-" + f.getId();

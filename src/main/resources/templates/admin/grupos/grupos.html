@@ -51,6 +51,9 @@
 								<td class="centrarItemsTabla"
 									th:text="${grupo.programas.get(0).facultad.nombre == 'SIN FACULTAD'}?${grupo.centro.facultad.nombre}:${grupo.programas.get(0).facultad.nombre}">
 								</td>
+								<!--<td class="centrarItemsTabla" th:text="${grupo.programas != null and grupo.programas.size() > 0 ? (grupo.programas.get(0).facultad.nombre == 'SIN FACULTAD' ? grupo.centro.facultad.nombre : grupo.programas.get(0).facultad.nombre) : ''}">
+								</td>-->
+
 								<td class="centrarItemsTabla" th:text="${grupo.centro.nombre}"></td>
 								<td class="centrarItemsTabla" th:text="${grupo.lider}"></td>
 								<td class="centrarItemsTabla" th:switch="${grupo.categoria}"><span

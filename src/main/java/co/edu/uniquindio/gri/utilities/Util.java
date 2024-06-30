@@ -225,27 +225,25 @@ public class Util {
 	 */
 	public int[] obtenerCantidadGenerosInvesgitadores(List<Investigador> investigadores) {
 
-		int[] resutado = new int[] { 0, 0, 0 };
+		int[] resultado = new int[] { 0, 0, 0 };
 
 		if (investigadores.size() == 0)
-			return resutado;
+			return resultado;
 
 		for (Investigador investigador : investigadores) {
-			if (investigador.getSexo().equals(GENERO_MASCULINO)) {
-
-				resutado[0] += 1;
-
-			} else if (investigador.getSexo().equals(GENERO_FEMENINO)) {
-				resutado[1] += 1;
-
-			} else if (investigador.getSexo().equals(GENERO_INDEFINIDO)) {
-				resutado[2] += 1;
-
+			String sexo = investigador.getSexo();
+			if (sexo == null || sexo.equals(GENERO_INDEFINIDO)) {
+				resultado[2] += 1;
+			} else if (sexo.equals(GENERO_MASCULINO)) {
+				resultado[0] += 1;
+			} else if (sexo.equals(GENERO_FEMENINO)) {
+				resultado[1] += 1;
 			}
 		}
 
-		return resutado;
+		return resultado;
 	}
+
 
 	/**
 	 * Metodo que permite codificar contraseÃƒÂ±a
