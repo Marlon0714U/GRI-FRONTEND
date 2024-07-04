@@ -171,6 +171,9 @@ public class Util {
 
 		for (Investigador investigador : investigadores) {
 			Pertenencia pertenecia_investigador = pertenenciaDAO.getPertenenciaByIdInves(investigador.getId());
+			if(pertenecia_investigador != null) {
+				System.out.println( pertenecia_investigador.getInvestigador_id() + "," + pertenecia_investigador.getPertenencia());
+			}
 
 			if (pertenecia_investigador != null) {
 

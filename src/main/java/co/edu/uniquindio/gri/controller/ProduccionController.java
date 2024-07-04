@@ -60,20 +60,14 @@ public class ProduccionController {
 	@GetMapping("/producciones/{type}/{id}/{tipo}")
 	public List<?> getProducciones(@PathVariable("type") String type, @PathVariable("id") Long entityId,
 								   @PathVariable("tipo") Long tipoId) {
-		System.out.println("getProducciones(" + type + ", " + entityId + ", " + tipoId + ")");
-		System.out.println("producciones obtenidas:");
 		List<?> producciones = produccionDAO.getProducciones(type, entityId, tipoId);
 		for (Object produccion : producciones) {
 			if (produccion instanceof ProduccionBGrupo) {
 				ProduccionBGrupo p = (ProduccionBGrupo) produccion;
-				System.out.println("--------------------------------------");
-				System.out.println(p.getAnio() + "," + p.getReferencia());
-				System.out.println("------------------fin--------------------");
+
 			} else if (produccion instanceof ProduccionGrupo) {
 				ProduccionGrupo p = (ProduccionGrupo) produccion;
-				System.out.println("--------------------------------------");
-				System.out.println(p.getAnio() + "," + p.getReferencia());
-				System.out.println("------------------fin--------------------");
+
 			}
 		}
 		return producciones;

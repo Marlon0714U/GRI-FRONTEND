@@ -211,8 +211,11 @@ public class WebController {
 			@RequestParam(name = "type", required = false, defaultValue = "u") String type,
 			@RequestParam(name = "subType", required = false, defaultValue = "pa") String subType,
 			@RequestParam(name = "id", required = false, defaultValue = "0") String id, Model model) {
+
 		model.addAttribute("type", type);
 		model.addAttribute("id", id);
+
+		System.out.println("GET INVESTIGADORES PERTENENCIA");
 
 		List<Investigador> investigadores = new ArrayList<>();
 		if (Long.parseLong(id) != 0) {
@@ -878,7 +881,6 @@ public class WebController {
 	/*administracion de grupos de ivnestigacion*/
 	@GetMapping("/Admgrupos")
 	public String getAllGrupos(Model model) {
-		System.out.println("SE OBTIENE LOS GRUPOS ADM");
 
 		// model.addAttribute("titulo", "USUARIOS");
 		model.addAttribute("id", 0);
@@ -1458,7 +1460,6 @@ public class WebController {
 	public @ResponseBody Respuesta saveUsuario(User user) {
 
 		Respuesta respuesta = new Respuesta();
-		System.out.println("user: " + user);
 
 		if (user != null) {
 
@@ -1541,9 +1542,6 @@ public class WebController {
 
 	@PostMapping("centros/save/{idFacultad}")
 	public @ResponseBody Respuesta saveCentro(Centro centro, @PathVariable("idFacultad") Long idFacultad) {
-
-		System.out.println("centro: " + centro);
-		System.out.println("idFacultad: " + idFacultad);
 
 		Respuesta respuesta = new Respuesta();
 
@@ -1782,10 +1780,6 @@ public class WebController {
 			@RequestParam(name = Util.PARAM_ID, required = false, defaultValue = Util.PARAM_UNIVERSITY_LEVEL_ID) String id,
 			Model model, HttpServletResponse response) throws SQLException, IOException, JRException {
 
-		System.out.println("ID: " + id);
-		System.out.println("Type: " + type);
-
-
 		Connection conexion = jdbcTemplate.getDataSource().getConnection();
 
 		List<JasperPrint> jasperPrintList = new ArrayList<>();
@@ -1817,7 +1811,6 @@ try{
 	private void imprimirReporte(HttpServletResponse response, List<JasperPrint> jasperPrintList)
 			throws IOException, JRException {
 
-		System.out.println("imprimirReportemethod");
 
 		response.setContentType("application/pdf");
 		response.setHeader("Content-disposition", "inline; filename=reporte de investigaciÃ³n.pdf");
@@ -2920,7 +2913,7 @@ try{
 	public String getEstadisticasUniquindio(Model model) {
 
 		model.addAttribute("color", "card-0");
-
+		System.out.println("Estadisticas Uniquindio");
 		// ------Llamado a las consultas en la base de datos para
 		// producciones-----------------------------------------------------------------------
 		model.addAttribute("cantidadActividadesDeFormacion", produccionDAO.getCantidadActividadesFormacion());
@@ -2950,7 +2943,9 @@ try{
 		// ingenieria-----------------------------------------------------------------------
 
 		model.addAttribute("cantidadProgramasAcademicosIngenieria", resumenIngenieria.get(0));
+		System.out.println("la cantidad de programas academicos en ingenieria es: " + resumenIngenieria.get(0));
 		model.addAttribute("cantidadProgramasDoctoradoIngenieria", resumenIngenieria.get(1));
+		System.out.println("la cantidad de programas doctorado en ingenieria es: " + resumenIngenieria.get(1));
 		model.addAttribute("cantidadProgramasMaestriaIngenieria", resumenIngenieria.get(2));
 		model.addAttribute("cantidadProgramasEspecializacionIngenieria", resumenIngenieria.get(3));
 		model.addAttribute("cantidadCentrosInvestigacionIngenieria", resumenIngenieria.get(4));
@@ -2975,6 +2970,7 @@ try{
 
 		// ------AdiciÃ³n de atributos al modelo con informacion de
 		// basicas-----------------------------------------------------------------------
+
 		model.addAttribute("cantidadProgramasAcademicosCienciasBasicas", resumenCienciasBasicas.get(0));
 		model.addAttribute("cantidadProgramasDoctoradoCienciasBasicas", resumenCienciasBasicas.get(1));
 		model.addAttribute("cantidadProgramasMaestriaCienciasBasicas", resumenCienciasBasicas.get(2));
